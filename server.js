@@ -4,16 +4,12 @@ var doctorsData = require('./doctors-data');
 
 var app = express();
 
-app.use(express.static(__dirname + '/public'));
+require('./doctors-service')(doctorsData, app);
 
 app.set('views', __dirname);
 app.set('view engine', 'jade');
 
-app.get('/api/doctors', function(req, res) {
-    doctorsData.findDoctors().then(function(collection) {
-        res.send(collection);
-    });
-});
+app.use(express.static(__dirname + '/public'));
 
 app.get('*', function(req, res) {
     res.render('index');

@@ -8,11 +8,15 @@ var findDoctors = function(query) {
     return Promise.cast(mongoose.model('Doctor').find({}).exec());
 };
 
+var createDoctor = Promise.promisify(Doctor.create, Doctor);
+
+// exports
+
 exports.findDoctors = findDoctors;
 
 exports.connectDB = Promise.promisify(mongoose.connect, mongoose);
 
-var createDoctor = Promise.promisify(Doctor.create, Doctor);
+exports.saveDoctor = createDoctor;
 
 exports.seedDoctors = function() {
     return findDoctors({}).then(function(collection) {
